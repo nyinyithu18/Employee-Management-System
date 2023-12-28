@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home Page</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+	
+	<div align="right" class="d-flex justify-content-around mt-4 mb-2">
+		<form th:action="@{/employeeList}", method="GET">
+			<input class="btn btn-primary" type="submit" value="Employee List">
+		</form>
+		<form th:action="@{createData}", method="GET">
+			<input class="btn btn-primary" type="submit" value="Add Employee">
+		</form>
+	</div>
+	
+	</form>
+	<hr>
+	
+	<div align="center" class="mt-2">
+		<h1 class="mb-2">Employee Data Show</h1>
+		<h3 th:if="${#strings.toString(param.deleteResult)} == '1'" style="color: green">Employee data was deleted Successfully</h3>
+		<h3 th:if="${#strings.toString(param.insertResult)} == '1'" style="color: green">Employee data was inserted Successfully</h3>
+		<h3 th:if="${#strings.toString(param.updateResult)} == '1'" style="color: green;">Your Selected Data was Updated Successfully</h3>
+		<table class="employee container">
+			<tr>
+				<th>No.</th>
+				<th>Employee Name</th>
+				<th>Employee Age</th>
+				<th>Employee Salary</th>
+				<th>Action</th>
+			</tr>
+			<tr th:each="employee : ${employeeList}">
+				<td th:text="${employee.empNo}"></td>
+				<td th:text="${employee.empName}"></td>
+				<td th:text="${employee.empAge}"></td>
+				<td th:text="${employee.empSalary}"></td>
+				<td class="d-flex justify-content-around">
+					<a th:href="@{/deleteData/{id} (id = ${employee.empNo})}" class="btn btn-danger">Delete?</a>
+					<a th:href="@{/updateData/{id} (id = ${employee.empNo})}" class="btn btn-primary">Update?</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

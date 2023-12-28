@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+   
+    
+    <mapper namespace="com.employeemanagementsystem.employeemanagementsystem.repository.EmployeeRepository">
+    
+    	<resultMap id="employeeResultMap" type="EmployeeModel">
+    		<id column="emp_no" property="empNo" />
+    		<result column="emp_name" property="empName" />
+    		<result column="emp_age" property="empAge" />
+    		<result column="emp_salary" property="empSalary" />
+    	</resultMap>
+    
+		<insert id="employeeDataAdd" parameterType="EmployeeModel">
+       	 	INSERT INTO employee (emp_name, emp_age, emp_salary) VALUES (#{empName}, #{empAge}, #{empSalary});
+		</insert>
+	
+		<select id="employeeList" resultMap="employeeResultMap">
+			SELECT emp_no, emp_name, emp_age, emp_salary FROM employee;
+		</select>
+		
+		<delete id="deleteEmpData" parameterType="int">
+			DELETE FROM employee WHERE emp_no=#{empNo};
+		</delete>
+		
+		<select id="updateData" parameterType="int" resultMap="employeeResultMap">
+			SELECT emp_no, emp_name, emp_age, emp_salary FROM employee WHERE emp_no=#{empNo};
+		</select>
+		
+		<update id="updateProcess" parameterType="EmployeeModel">
+		 	UPDATE employee SET emp_name=#{empName}, emp_age=#{empAge}, emp_salary=#{empSalary} WHERE emp_no=#{empNo};
+		</update>
+</mapper>
